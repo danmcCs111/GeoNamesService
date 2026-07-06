@@ -5,4 +5,5 @@ https://download.geofabrik.de/
 https://www.encyclopedia.com/
 https://voicegenerator.io/
 https://www.npmjs.com/package/kokoro-js
+https://github.com/hexgrad/kokoro
 https://josm.openstreetmap.de/download/windows/josm-setup.msi
