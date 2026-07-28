@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 if [ "$#" -ne 3 ]; then
 	echo "need to provide processing file and output filename"
 	exit
@@ -26,8 +27,8 @@ do
 		end=$(( $t * $it ))
 	fi
 	#processing.
-	cat $fle | sed -n "${start}","${end}"p > $fle-$t.txt
+	cat $fle | sed -n "${start}","${end}"p > $fle-$t.csv
 	start=$(( $end + 1))
 
-	./createInsert.sh $fle-$t.txt $outFle-$t.txt&
+	./createInsert.sh $fle-$t.csv $outFle-$t.sql&
 done
