@@ -1,6 +1,12 @@
 #!/bin/bash
 
+if [ "$#" -ne 2 ]; then
+	echo "need to provide processing file and output filename"
+	exit
+fi
+
 fle=$1
+outFle=$2
 
 len=$(( `wc -l $fle | egrep -o "[0-9]+"` ))
 echo $len
@@ -14,4 +20,6 @@ do
 	
 	out=`cat $fle | head -"${b}" | tail -"${e}" | sed -E 's/[\t]+/,/g'`
 	echo $i"/"$len " " $out
+	echo $out >> $outFle
 done
+
