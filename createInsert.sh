@@ -38,20 +38,12 @@ constructValuesStatement()
 	back=$3
 
 	front=`echo $front | sed "s/, /', '/g" | sed "s/^/'/" | sed -E "s/,[ ]*$/',/g"`
-	front1=`echo $front | awk '{print $1 " "}'`
-	front2=`echo $front | awk '{print $2 " "} ' | sed "s/'//g"`
-	front3=`echo $front | awk '{print $3 " "}'`
-	front=$front1$front2$front3
-
 	middle=`echo $middle | sed "s/, /', '/g" | sed "s/^/'/" | sed -E "s/,[ ]*$/',/g"`
-
-	#TODO quotes/no quotes
 	echo "VALUES (" $front $middle $back ");"
 }
 
 len=$(( `wc -l $fle | egrep -o "[0-9]+"` ))
 echo $len
-len=10
 
 for i in $(eval echo "{1..$len}")
 do
@@ -67,11 +59,8 @@ do
 	#back
 	back=`cat US.csv | head -"${b}" | tail -"${e}" | sed 's/ /@/g' | sed 's/,/ /g' | awk '{print $(NF-2) ", " $(NF-1) ", " $(NF) ", "}' | sed 's/@/ /g' | sed -E 's/[, ]+$//g'`
 
-	out=$front$middle$back
+	out=`constructInsertStatement "$front" "$middle" "$back"`
 
-	constructInsertStatement "$front" "$middle" "$back"
-
-	echo $i"/"$len " " $out
 	echo $out >> $outFle
 done
 
