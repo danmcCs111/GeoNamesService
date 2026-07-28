@@ -42,7 +42,7 @@ constructValuesStatement()
 	echo "VALUES (" $front $middle $back ");"
 }
 
-len=$(( `wc -l $fle | egrep -o "[0-9]+"` ))
+len=$(( `wc -l $fle | awk '{print $1}'` ))
 echo $len
 
 for i in $(eval echo "{1..$len}")
@@ -51,15 +51,17 @@ do
 	e=1
 	
 	#front
-	front=`cat US.csv | head -"${b}" | tail -"${e}" | sed 's/ /@/g' | sed 's/,/ /g' | awk '{print $1 ", " $2 ", " $3 ", "}' | sed 's/@/ /g'`
+	front=`cat $fle | sed -n "${b}","${e}"p | sed 's/ /@/g' | sed 's/,/ /g' | awk '{print $1 ", " $2 ", " $3 ", "}' | sed 's/@/ /g'`
 
 	#middle
-	middle=`cat US.csv | head -"${b}" | tail -"${e}" | sed 's/ /@/g' | sed 's/,/ /g' | awk '{ for (i=(NF-6); i <= NF-3; i++) print $i ", "}' | sed 's/@/ /g'`
+	middle=`cat $fle | sed -n "${b}","${e}"p | sed 's/ /@/g' | sed 's/,/ /g' | awk '{ for (i=(NF-6); i <= NF-3; i++) print $i ", "}' | sed 's/@/ /g'`
 
 	#back
-	back=`cat US.csv | head -"${b}" | tail -"${e}" | sed 's/ /@/g' | sed 's/,/ /g' | awk '{print $(NF-2) ", " $(NF-1) ", " $(NF) ", "}' | sed 's/@/ /g' | sed -E 's/[, ]+$//g'`
+	back=`cat $fle | sed -n "${b}","${e}"p | sed 's/ /@/g' | sed 's/,/ /g' | awk '{print $(NF-2) ", " $(NF-1) ", " $(NF) ", "}' | sed 's/@/ /g' | sed -E 's/[, ]+$//g'`
 
 	out=`constructInsertStatement "$front" "$middle" "$back"`
+
+	echo $i"/"$len
 
 	echo $out >> $outFle
 done
