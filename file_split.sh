@@ -17,7 +17,7 @@ path=$3
 len=$(( `wc -l $fle | egrep -o "[0-9]+"` ))
 echo $len
 
-count=$(( $len / $maxCount ))
+count=$(( ($len / $maxCount) + 1 ))
 start=1
 echo $count
 dCounter=0
