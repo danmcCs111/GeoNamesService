@@ -1,19 +1,17 @@
 #!/bin/bash
 
 
-if [ "$#" -ne 4 ]; then
+if [ "$#" -ne 3 ]; then
 	echo "provide: "
 	echo "csv"
-	echo "output sql filename"
 	echo "number of file splits"
 	echo "save path" 
 	exit
 fi
 
 fle=$1
-outFle=$2
-count=$3
-path=$4
+count=$2
+path=$3
 
 
 len=$(( `wc -l $fle | egrep -o "[0-9]+"` ))
