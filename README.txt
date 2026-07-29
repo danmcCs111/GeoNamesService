@@ -1,2 +1,6 @@
-added GeoNamesToSql.java file in ApplicationBuilder Project. Parsing and constructing too slow for shell functions used.
+Included:
 
+US and allCountries geonames extracts. (https://download.geonames.org/export/zip/)
+Sqlite Database file containing records from allCountries zip.
+
+(GeoNamesToSql.java & GeoNamesToInsertRequest.java in https://github.com/danmcCs111/ApplicationBuilder Project used to build included extracts.)
