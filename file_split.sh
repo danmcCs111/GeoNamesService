@@ -4,22 +4,22 @@
 if [ "$#" -ne 3 ]; then
 	echo "provide: "
 	echo "csv"
-	echo "number of file splits"
+	echo "max count in file to split"
 	echo "save path" 
 	exit
 fi
 
 fle=$1
-count=$2
+maxCount=$2
 path=$3
 
 
 len=$(( `wc -l $fle | egrep -o "[0-9]+"` ))
 echo $len
 
-it=$(( $len / $count ))
+count=$(( $len / $maxCount ))
 start=1
-echo $it
+echo $count
 dCounter=0
 
 for t in $(eval echo "{1..$count}")
@@ -28,7 +28,7 @@ do
 	then
 		end=`wc -l $fle | awk '{print $1}'`
 	else
-		end=$(( $t * $it ))
+		end=$(( $t * $maxCount ))
 	fi
 	#processing.
 	cat $fle | sed -n "${start}","${end}"p > $path/$fle-$t.csv
